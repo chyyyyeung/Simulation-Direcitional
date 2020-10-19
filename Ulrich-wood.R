@@ -2,11 +2,6 @@ library("mvtnorm")
 library("Directional")
 
 
-n<-10^3
-#concerntration
-kappa<-20
-#dimension
-p<-3
 
 
 
@@ -62,7 +57,7 @@ rvMF_Wood_rotation<-function(n,mu,kappa)
 {
   #mu is the mean direction
   #kappa is the concerntration parameter
-  
+  #n is the size of simulation
   if(kappa>0){
     p<-length(mu) #dimension
     mu<-mu/sqrt(sum(mu^2)) #mean
@@ -83,7 +78,7 @@ rvMF_Wood_rotation<-function(n,mu,kappa)
         W<-(1-(1+b_0)*Z)/(1-(1-b_0)*Z)
         
         #step3
-        if(kappa*W+(p-1)*log(1-x_0*W)-c>=log(U)){acc <- TRUE}#go to Step2
+        if(kappa*W+(p-1)*log(1-x_0*W)-c>=log(U)){acc <- TRUE}#if not, go to Step2
         
       }
       #uniform distribution
@@ -106,5 +101,5 @@ rvMF_Wood_rotation<-function(n,mu,kappa)
   X
 }
 X<-rvMF_Wood_rotation(n=200,mu = c(3,1,4),kappa = 10)
-
+sphereplot(X,col="red")
 

@@ -41,7 +41,7 @@ for (i in 1:n) {
   #reduced to Uniform
   S<-rmvnorm(mean=rep(0,p),sigma = diag(p),n = n)
   S.norm<-sqrt(apply(X =Y^2,MARGIN = 1,FUN = sum))
-  V<-S/S.norm
+  X<-S/S.norm
 }
   
 X

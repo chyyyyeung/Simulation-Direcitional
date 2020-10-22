@@ -1,7 +1,7 @@
 library("mvtnorm")
 library("Directional")
 
-
+# First function
 rvMF_Wood<-function(n,kappa,p)
 {
   if(kappa>0){
@@ -19,9 +19,16 @@ rvMF_Wood<-function(n,kappa,p)
         U <- runif(n = 1, min = 0,max = 1)
         W <- (1-(1+b_0)*Z) / (1-(1-b_0)*Z)
         criterion = kappa*W + (p-1)*log(1-x_0*W) - c
-        if(criterion >= log(U)){
+        if(criterion < log(U)){
+          next;
+        }
+        else{
           break;
         }
+        
+        # if(criterion >= log(U)){
+        #   break;
+        # }
       }
       
       #uniform distribution
@@ -38,7 +45,7 @@ rvMF_Wood<-function(n,kappa,p)
     S <- rmvnorm(mean=rep(0,p),sigma = diag(p),n = n)
     S.norm <- sqrt(apply(X =Y^2,MARGIN = 1,FUN = sum))
     V <- S/S.norm
-    X = V
+    X <- V
   }
   X
 }

@@ -12,6 +12,7 @@ rvMF_Wood<-function(n,kappa,p)
     c <- kappa*x_0+(p-1)*log(1-x_0^2)
     
     X <- matrix(data = NA,nrow = n,ncol = p)
+    #count<-0
     for (i in 1:n) {
       
       while(TRUE){
@@ -19,6 +20,7 @@ rvMF_Wood<-function(n,kappa,p)
         U <- runif(n = 1, min = 0,max = 1)
         W <- (1-(1+b_0)*Z) / (1-(1-b_0)*Z)
         criterion = kappa*W + (p-1)*log(1-x_0*W) - c
+        count <- count + 1
         if(criterion >= log(U)){
           break;
         }
@@ -40,11 +42,16 @@ rvMF_Wood<-function(n,kappa,p)
     V <- S/S.norm
     X = V
   }
-  X
+  return(X)
 }
 
 set.seed(42)
-X<-rvMF_Wood(n=200,kappa=10,p=3)
+count<-rep( 0 , 10^3 )
+for (i in 1:10^3) {
+  count[i] <- rvMF_Wood(n = 200,kappa = 20,p = 3)  
+}
+M <- mean(count)/200
+M
 
 sphereplot(X, col = "RED")
 
@@ -98,6 +105,16 @@ rvMF_Wood_rotation<-function(n,mu,kappa)
   
   X
 }
-X<-rvMF_Wood_rotation(n=200,mu = c(3,1,4),kappa = 10)
-sphereplot(X,col="red")
+
+
+X<-rvMF_Wood_rotation(n=200,mu = c(1,0,1),kappa = 50)
+
+sphereplot_trans(X,col="red")
+rgl.viewpoint( theta = 40, phi = 15, fov = 60, zoom = 0.8,
+               scale = par3d("scale"), interactive = TRUE,
+               type = c("userviewpoint", "modelviewpoint") )
+vmf.kerncontour(u = euclid.inv(X),thumb = "none",den.ret = FALSE,full = FALSE,ngrid = 100)
+
+
+rgl.snapshot("Figures/kappa20.png")
 

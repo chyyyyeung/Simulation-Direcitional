@@ -59,11 +59,13 @@ dev.off()
 
 #von Mises
 
-x<-seq(-pi,pi,by = pi/100)
+x<-seq(-pi,pi,by = pi/1000)
 Y_1<-dvonmises( circular(x) , mu = circular(0), kappa = 0.1 )
 Y_2<-dvonmises( circular(x) , mu = circular(0), kappa = 1 )
 Y_3<-dvonmises( circular(x) , mu = circular(0), kappa = 5 )
 Y_4<-dvonmises( circular(x) , mu = circular(0), kappa = 8 )
+
+dvonmises( 0 , mu = circular(0), kappa = 0.1)
 
 plot(x,Y_4,type = "l", lty = 4 , lwd = 1 , xlim = c(-pi, pi),
      xaxt = "n",yaxt = "n" , xlab = "",ylab = "" , frame.plot = FALSE)
@@ -76,7 +78,19 @@ lines(x = x,y = Y_1,type = "l", lty = 1 , lwd = 1 )
 #Add a legend to the plot and set legend lty
 legend("topleft", legend = c("0.1", "1","5","8"),
         lty = 1:4, cex = 0.8)
-
+?curve
+ff <- function(x){ dvonmises( x , mu = circular(0), kappa = 8)}
+curve(expr = ff, col="blue", from = -pi,to = pi, n = 1001, add = FALSE,
+      type = "l", xname = "x")
+ff <- function(x){ dvonmises( x , mu = circular(0), kappa = 5)}
+curve(expr = ff, col="blue", from = -pi,to = pi, n = 1001, add = TRUE,
+      type = "l", xname = "x")
+ff <- function(x){ dvonmises( x , mu = circular(0), kappa = 1)}
+curve(expr = ff, col="blue", from = -pi,to = pi, n = 1001, add = TRUE,
+      type = "l", xname = "x")
+ff <- function(x){ dvonmises( x , mu = circular(0), kappa = 0.1)}
+curve(expr = ff, col="blue", from = -pi,to = pi, n = 1001, add = TRUE,
+      type = "l", xname = "x")
 ##compare of two density
 
 #A(kappa)
